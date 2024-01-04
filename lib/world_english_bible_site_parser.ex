@@ -13,10 +13,26 @@ defmodule WorldEnglishBibleSiteParser do
   chapter HTML file.
   """
   def parse_footnotes(markup) do
+    footnote_parent_selector = "div.footnote"
+
     {:ok, document} = Floki.parse_document(markup)
 
     document
-    |> Floki.find("div.footnote")
+    |> Floki.find(footnote_parent_selector)
+    |> Floki.raw_html(pretty: true)
+  end
+
+  @doc """
+  parse_chapter uses the Floki library to extract the chapter text markup and content
+  from a chapter HTML file.
+  """
+  def parse_chapter(markup) do
+    verses = "div.p"
+
+    {:ok, document} = Floki.parse_document(markup)
+
+    document
+    |> Floki.find(verses)
     |> Floki.raw_html(pretty: true)
   end
 
