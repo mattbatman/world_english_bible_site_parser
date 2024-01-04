@@ -37,10 +37,10 @@ defmodule WorldEnglishBibleSiteParser do
   end
 
   @doc """
-  append_footnote_ids appends the given string to the ID attributes of a
+  append_ids appends the given string to the ID attributes of a
   footnote.
   """
-  def append_footnote_ids(markup, chapter_fragment) do
+  def append_ids(markup, chapter_fragment) do
     String.replace(markup, "id=\"", "id=\"#{chapter_fragment}")
   end
 
@@ -48,7 +48,22 @@ defmodule WorldEnglishBibleSiteParser do
   append_footnote_hrefs appends the given string to the href attributes of a
   footnote backlink.
   """
-  def append_footnote_hrefs(markup, chapter_fragment) do
+  def append_hrefs(markup, chapter_fragment) do
     String.replace(markup, "href=\"#", "href=\"##{chapter_fragment}")
+  end
+
+  @doc """
+  extract_chapter pulls the verse and footnote content, modifies the ID's and
+  href's, and returns the chapter content and footnotes concatenated together.
+  """
+  def extract_chapter(markup, chapter_fragment) do
+    chapter_markup = parse_chapter(markup)
+    footnote_markup = parse_footnotes(markup)
+
+    all_markup = chapter_markup <> footnote_markup
+
+    all_markup
+    |> append_ids(chapter_fragment)
+    |> append_hrefs(chapter_fragment)
   end
 end
