@@ -66,4 +66,19 @@ defmodule WorldEnglishBibleSiteParser do
     |> append_ids(chapter_fragment)
     |> append_hrefs(chapter_fragment)
   end
+
+  @doc """
+  get_chapter_fragment takes a string of a chapter file and returns the
+  string of that will be appended to ID's and href's.
+
+  ## Examples
+
+      iex> WorldEnglishBibleSiteParser.get_chapter_fragment("GEN01.htm")
+      "GEN1"
+  """
+  def get_chapter_fragment(filename) do
+    filename
+    |> Path.basename(".htm")
+    |> String.replace(~r/([a-zA-Z])(0+)(\d+)/, "\\1\\3")
+  end
 end

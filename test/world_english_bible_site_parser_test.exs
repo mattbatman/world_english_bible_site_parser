@@ -1,7 +1,6 @@
 defmodule WorldEnglishBibleSiteParserTest do
   use ExUnit.Case
   doctest WorldEnglishBibleSiteParser
-  import StringComparison
 
   @parsed_text """
   <!DOCTYPE html>
@@ -492,6 +491,24 @@ defmodule WorldEnglishBibleSiteParserTest do
       actual = WorldEnglishBibleSiteParser.extract_chapter(@parsed_text, "GEN1")
 
       assert actual == expected
+    end
+
+    test "get_chapter_fragment returns the string scheme from a file title" do
+      file_a = "GEN01.htm"
+      file_b = "GEN10.htm"
+      file_c = "PSA140.htm"
+
+      expected_a = "GEN1"
+      expected_b = "GEN10"
+      expected_c = "PSA140"
+
+      actual_a = WorldEnglishBibleSiteParser.get_chapter_fragment(file_a)
+      actual_b = WorldEnglishBibleSiteParser.get_chapter_fragment(file_b)
+      actual_c = WorldEnglishBibleSiteParser.get_chapter_fragment(file_c)
+
+      assert actual_a == expected_a
+      assert actual_b == expected_b
+      assert actual_c == expected_c
     end
   end
 end
