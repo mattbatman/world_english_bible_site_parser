@@ -510,5 +510,23 @@ defmodule WorldEnglishBibleSiteParserTest do
       assert actual_b == expected_b
       assert actual_c == expected_c
     end
+
+    test "extract_chapter_number returns the chapter number from a file title" do
+      file_a = "GEN1"
+      file_b = "GEN10"
+      file_c = "PSA140"
+
+      expected_a = "1"
+      expected_b = "10"
+      expected_c = "140"
+
+      actual_a = WorldEnglishBibleSiteParser.extract_chapter_number(file_a)
+      actual_b = WorldEnglishBibleSiteParser.extract_chapter_number(file_b)
+      actual_c = WorldEnglishBibleSiteParser.extract_chapter_number(file_c)
+
+      assert actual_a == expected_a
+      assert actual_b == expected_b
+      assert actual_c == expected_c
+    end
   end
 end

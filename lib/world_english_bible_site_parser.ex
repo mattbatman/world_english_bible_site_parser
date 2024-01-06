@@ -68,6 +68,26 @@ defmodule WorldEnglishBibleSiteParser do
   end
 
   @doc """
+  prepend_chapter_header prepends the chapter header to the given string.
+  """
+  def prepend_chapter_header(markup, chapter_fragment) do
+    # TODO: prepend chapter header in markdown
+  end
+
+  @doc """
+  extract_chapter_number takes the chapter fragment to be used in ID's and href's
+  and returns just the number of the chapter.
+
+  ## Examples
+
+      iex> WorldEnglishBibleSiteParser.extract_chapter_number("GEN1")
+      "1"
+  """
+  def extract_chapter_number(chapter_fragment) do
+    String.replace(chapter_fragment, ~r/([a-zA-Z]+)(\d+)/, "\\2")
+  end
+
+  @doc """
   get_chapter_fragment takes a string of a chapter file and returns the
   string of that will be appended to ID's and href's.
 
@@ -76,6 +96,7 @@ defmodule WorldEnglishBibleSiteParser do
       iex> WorldEnglishBibleSiteParser.get_chapter_fragment("GEN01.htm")
       "GEN1"
   """
+
   def get_chapter_fragment(filename) do
     filename
     |> Path.basename(".htm")
@@ -92,6 +113,7 @@ defmodule WorldEnglishBibleSiteParser do
       |> Enum.filter(&(Path.extname(&1) == ".htm"))
       |> Enum.map(&read_file(&1))
       |> Enum.map(fn {file, content} ->
+        # TODO: include appending chapter number and HTML header
         extract_chapter(content, get_chapter_fragment(file))
       end)
       |> Enum.join("\n")
