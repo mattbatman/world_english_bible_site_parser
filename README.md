@@ -29,5 +29,5 @@ iex -S mix
 ```
 
 ```
-WorldEnglishBibleSiteParser.read_html_files()
+WorldEnglishBibleSiteParser.process_site_chapter_files()
 ```

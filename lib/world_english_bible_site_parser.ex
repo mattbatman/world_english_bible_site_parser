@@ -112,9 +112,9 @@ defmodule WorldEnglishBibleSiteParser do
   end
 
   @doc """
-  read_html_files
+  process_site_chapter_files
   """
-  def read_html_files() do
+  def process_site_chapter_files() do
     all_content =
       System.get_env("CHAPTER_FILES_DIR")
       |> File.ls!()
