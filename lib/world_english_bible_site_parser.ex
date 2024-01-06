@@ -121,8 +121,11 @@ defmodule WorldEnglishBibleSiteParser do
       |> Enum.filter(&(Path.extname(&1) == ".htm"))
       |> Enum.map(&read_file(&1))
       |> Enum.map(fn {file, content} ->
-        # TODO: include appending chapter number and HTML header
-        extract_chapter(content, get_chapter_fragment(file))
+        chapter_fragment = get_chapter_fragment(file)
+
+        content
+        |> extract_chapter(chapter_fragment)
+        |> prepend_chapter_header(chapter_fragment)
       end)
       |> Enum.join("\n")
 
