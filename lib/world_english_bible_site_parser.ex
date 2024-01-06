@@ -53,16 +53,26 @@ defmodule WorldEnglishBibleSiteParser do
   end
 
   @doc """
-  extract_chapter pulls the verse and footnote content, modifies the ID's and
-  href's, and returns the chapter content and footnotes concatenated together.
+  extract_chapter pulls the verse and footnote content by selecting all children
+  of div.main and filtering out HTML elements that are known not to contain
+  actual chapter content (such as navigation elements and copyright information).
+
+  It modifies the ID's and href's, and returns the chapter content and footnotes
+  concatenated together.
   """
   def extract_chapter(markup, chapter_fragment) do
-    chapter_markup = parse_chapter(markup)
-    footnote_markup = parse_footnotes(markup)
+    children_of_parent_selector = "div.main > *"
+    exclude_selector = ".chapterlabel, .tnav, .copyright, .mt, .mt1, .mt2, .mt3"
 
-    all_markup = chapter_markup <> footnote_markup
+    {:ok, document} = Floki.parse_document(markup)
 
-    all_markup
+    chapter_markup =
+      document
+      |> Floki.find(children_of_parent_selector)
+      |> Floki.filter_out(exclude_selector)
+      |> Floki.raw_html(pretty: true)
+
+    chapter_markup
     |> append_ids(chapter_fragment)
     |> append_hrefs(chapter_fragment)
   end
