@@ -71,7 +71,15 @@ defmodule WorldEnglishBibleSiteParser do
   prepend_chapter_header prepends the chapter header to the given string.
   """
   def prepend_chapter_header(markup, chapter_fragment) do
-    # TODO: prepend chapter header in markdown
+    chapter = extract_chapter_number(chapter_fragment)
+
+    markdown = """
+
+    ### #{chapter}
+
+    """
+
+    markdown <> markup
   end
 
   @doc """

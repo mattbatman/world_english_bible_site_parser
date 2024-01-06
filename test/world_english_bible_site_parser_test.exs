@@ -528,5 +528,28 @@ defmodule WorldEnglishBibleSiteParserTest do
       assert actual_b == expected_b
       assert actual_c == expected_c
     end
+
+    test "prepend_chapter_header adds markdown of the chapter number" do
+      chapter_fragment = "GEN1"
+
+      start_markup = """
+      <div>
+        hello world
+      </div>
+      """
+
+      expected = """
+
+      ### 1
+
+      <div>
+        hello world
+      </div>
+      """
+
+      actual = WorldEnglishBibleSiteParser.prepend_chapter_header(start_markup, chapter_fragment)
+
+      assert actual == expected
+    end
   end
 end
