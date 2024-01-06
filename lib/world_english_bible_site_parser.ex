@@ -116,7 +116,7 @@ defmodule WorldEnglishBibleSiteParser do
   """
   def read_html_files() do
     all_content =
-      System.get_env("FILES_DIR")
+      System.get_env("CHAPTER_FILES_DIR")
       |> File.ls!()
       |> Enum.filter(&(Path.extname(&1) == ".htm"))
       |> Enum.map(&read_file(&1))
@@ -129,7 +129,7 @@ defmodule WorldEnglishBibleSiteParser do
       end)
       |> Enum.join("\n")
 
-    File.write(System.get_env("OUTPUT_DIR"), all_content)
+    File.write(System.get_env("CHAPTER_OUTPUT_DIR"), all_content)
   end
 
   @doc """
@@ -137,7 +137,7 @@ defmodule WorldEnglishBibleSiteParser do
   contents.
   """
   def read_file(file_path) do
-    full_path = Path.join(System.get_env("FILES_DIR"), file_path)
+    full_path = Path.join(System.get_env("CHAPTER_FILES_DIR"), file_path)
 
     {:ok, content} = File.read(full_path)
 
