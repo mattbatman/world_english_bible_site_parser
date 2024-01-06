@@ -27,7 +27,7 @@ defmodule WorldEnglishBibleSiteParser do
   from a chapter HTML file.
   """
   def parse_chapter(markup) do
-    verses = "div.p"
+    verses = ".p, .q, .q1, .q2, q.3, .b"
 
     {:ok, document} = Floki.parse_document(markup)
 
