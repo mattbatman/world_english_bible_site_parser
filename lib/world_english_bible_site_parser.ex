@@ -81,4 +81,33 @@ defmodule WorldEnglishBibleSiteParser do
     |> Path.basename(".htm")
     |> String.replace(~r/([a-zA-Z])(0+)(\d+)/, "\\1\\3")
   end
+
+  @doc """
+  read_html_files
+  """
+  def read_html_files() do
+    all_content =
+      System.get_env("FILES_DIR")
+      |> File.ls!()
+      |> Enum.filter(&(Path.extname(&1) == ".htm"))
+      |> Enum.map(&read_file(&1))
+      |> Enum.map(fn {file, content} ->
+        extract_chapter(content, get_chapter_fragment(file))
+      end)
+      |> Enum.join("\n")
+
+    File.write(System.get_env("OUTPUT_DIR"), all_content)
+  end
+
+  @doc """
+  read_file takes a string file path and returns the name of the file and its
+  contents.
+  """
+  def read_file(file_path) do
+    full_path = Path.join(System.get_env("FILES_DIR"), file_path)
+
+    {:ok, content} = File.read(full_path)
+
+    {file_path, content}
+  end
 end
