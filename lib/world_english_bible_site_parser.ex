@@ -122,7 +122,13 @@ defmodule WorldEnglishBibleSiteParser do
       |> Enum.map(&read_file(&1))
       |> Enum.map(fn {file, content} ->
         chapter_fragment = get_chapter_fragment(file)
+        chapter_number_as_string = extract_chapter_number(chapter_fragment)
+        chapter_number = String.to_integer(chapter_number_as_string)
 
+        {chapter_number, chapter_fragment, content}
+      end)
+      |> Enum.sort_by(fn {chapter_number, _, _} -> chapter_number end)
+      |> Enum.map(fn {_, chapter_fragment, content} ->
         content
         |> extract_chapter(chapter_fragment)
         |> prepend_chapter_header(chapter_fragment)
