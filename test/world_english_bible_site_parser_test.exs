@@ -464,36 +464,44 @@ defmodule WorldEnglishBibleSiteParserTest do
       file_a = "GEN01.htm"
       file_b = "GEN10.htm"
       file_c = "PSA140.htm"
+      file_d = "1SA01.htm"
 
       expected_a = "GEN1"
       expected_b = "GEN10"
       expected_c = "PSA140"
+      expected_d = "1SA1"
 
       actual_a = WorldEnglishBibleSiteParser.get_chapter_fragment(file_a)
       actual_b = WorldEnglishBibleSiteParser.get_chapter_fragment(file_b)
       actual_c = WorldEnglishBibleSiteParser.get_chapter_fragment(file_c)
+      actual_d = WorldEnglishBibleSiteParser.get_chapter_fragment(file_d)
 
       assert actual_a == expected_a
       assert actual_b == expected_b
       assert actual_c == expected_c
+      assert actual_d == expected_d
     end
 
-    test "extract_chapter_number returns the chapter number from a file title" do
+    test "extract_chapter_number returns the chapter number from the chapter fragment used in ID's and href's" do
       file_a = "GEN1"
       file_b = "GEN10"
       file_c = "PSA140"
+      file_d = "1SA1"
 
       expected_a = "1"
       expected_b = "10"
       expected_c = "140"
+      expected_d = "1"
 
       actual_a = WorldEnglishBibleSiteParser.extract_chapter_number(file_a)
       actual_b = WorldEnglishBibleSiteParser.extract_chapter_number(file_b)
       actual_c = WorldEnglishBibleSiteParser.extract_chapter_number(file_c)
+      actual_d = WorldEnglishBibleSiteParser.extract_chapter_number(file_d)
 
       assert actual_a == expected_a
       assert actual_b == expected_b
       assert actual_c == expected_c
+      assert actual_d == expected_d
     end
 
     test "prepend_chapter_header adds markdown of the chapter number" do

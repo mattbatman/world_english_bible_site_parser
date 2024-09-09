@@ -102,7 +102,7 @@ defmodule WorldEnglishBibleSiteParser do
       "1"
   """
   def extract_chapter_number(chapter_fragment) do
-    String.replace(chapter_fragment, ~r/([a-zA-Z]+)(\d+)/, "\\2")
+    String.slice(chapter_fragment, 3..-1)
   end
 
   @doc """
